@@ -1,0 +1,20 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: my-image-updater
+  namespace: argocd
+spec:
+  writeBackConfig:
+    method: "git"
+    gitConfig:
+      repository: "https://github.com/veenoise/demo.git"
+      branch: "main"
+      writeBackTarget: "helmvalues:./dev-values.yaml"
+  applicationRefs:
+    - namePattern: "k8s-demo-dev"
+      images:
+        - alias: "demo-dev"
+          imageName: "harbor.sabihinmolang.eu.org/demo/demo-dev:latest"
+          commonUpdateSettings:
+            pullsecret: k8s-demo-dev/harbor-secret
+            updateStrategy: "digest"
