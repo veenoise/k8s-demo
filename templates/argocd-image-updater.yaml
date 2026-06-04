@@ -4,12 +4,6 @@ metadata:
   name: my-image-updater
   namespace: argocd
 spec:
-  writeBackConfig:
-    method: "git:secret:argocd/git-secret"
-    gitConfig:
-      repository: "https://github.com/veenoise/demo.git"
-      branch: "main"
-      writeBackTarget: "helmvalues:./dev-values.yaml"
   applicationRefs:
     - namePattern: "k8s-demo-dev"
       images:
